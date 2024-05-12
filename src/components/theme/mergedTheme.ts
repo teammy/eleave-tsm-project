@@ -7,6 +7,8 @@
  */
 
 // MUI Imports
+import { Sarabun } from 'next/font/google'
+
 import { deepmerge } from '@mui/utils'
 import type { Theme } from '@mui/material/styles'
 
@@ -17,10 +19,19 @@ import type { SystemMode } from '@core/types'
 // Core Theme Imports
 import coreTheme from '@core/theme'
 
+const thaisarabun = Sarabun({
+  subsets: ['latin', 'thai'],
+  weight: ['300', '400', '500', '600', '700', '800']
+})
+
 const mergedTheme = (settings: Settings, mode: SystemMode, direction: Theme['direction']) => {
   // Vars
   const userTheme = {
     // Write your overrides here.
+
+    typography: {
+      fontFamily: thaisarabun.style.fontFamily
+    }
   } as Theme
 
   return deepmerge(coreTheme(settings, mode, direction), userTheme)

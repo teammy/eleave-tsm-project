@@ -73,11 +73,23 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         renderExpandedMenuItemIcon={{ icon: <i className='tabler-circle text-xs' /> }}
         menuSectionStyles={menuSectionStyles(verticalNavOptions, theme)}
       >
-        <MenuItem href='/home' icon={<i className='tabler-smart-home' />}>
-          Home
+        <MenuItem href='/create-shift' icon={<i className='tabler-calendar-plus' />}>
+          สร้างตารางเวร
         </MenuItem>
-        <MenuItem href='/about' icon={<i className='tabler-info-circle' />}>
-          About
+        <MenuItem href='/edit-shift' icon={<i className='tabler-table-options' />}>
+          แก้ไขตารางเวร
+        </MenuItem>
+        <MenuItem href='/current-shift' icon={<i className='tabler-table-row' />}>
+          ตารางเวรปัจจุบัน
+        </MenuItem>
+        <MenuItem href='/recent-shift' icon={<i className='tabler-rotate-2' />}>
+          ตารางเวรย้อนหลัง
+        </MenuItem>
+        <MenuItem href='/approve-shift' icon={<i className='tabler-copy-check' />}>
+          อนุมัติการแลกเวร
+        </MenuItem>
+        <MenuItem href='/create-employee' icon={<i className='tabler-users-plus' />}>
+          สร้างรายชื่อผู้ปฏิบัติงาน
         </MenuItem>
       </Menu>
       {/* <Menu
