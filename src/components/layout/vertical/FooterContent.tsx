@@ -31,7 +31,7 @@ const FooterContent = () => {
       <p>
         <span className='text-textSecondary'>{`© ${new Date().getFullYear()}, พัฒนาระบบ `}</span>
         <span>{`❤️`}</span>
-        <span className='text-textSecondary'>{` โดย ศูนย์คอมพิวเตอร์ `}</span>
+        <span className='text-textSecondary'>{` โดย ศูนย์คอม `}</span>
       </p>
       {!isBreakpointReached && (
         <div className='flex items-center gap-4'>
