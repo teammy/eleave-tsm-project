@@ -88,7 +88,7 @@ const VerticalMenu = ({ scrollMenu }: Props) => {
         <MenuItem href='/approve-shift' icon={<i className='tabler-copy-check' />}>
           อนุมัติการแลกเวร
         </MenuItem>
-        <MenuItem href='/create-employee' icon={<i className='tabler-users-plus' />}>
+        <MenuItem href='/employee' icon={<i className='tabler-users-plus' />}>
           สร้างรายชื่อผู้ปฏิบัติงาน
         </MenuItem>
       </Menu>

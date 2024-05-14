@@ -29,7 +29,7 @@ const verticalMenuData = (): VerticalMenuDataType[] => [
   },
   {
     label: 'สร้างรายชื่อผู้ปฏิบัติงาน',
-    href: '/create-employee',
+    href: '/employee',
     icon: 'tabler-users-plus'
   }
 ]
