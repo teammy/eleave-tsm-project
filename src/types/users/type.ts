@@ -1,4 +1,4 @@
-export type FormAddUserDataType = {
+export type UserDataType = {
   fullname: string
   ward_id: string
   postion_id: string

@@ -5,9 +5,10 @@ import React, { useState } from 'react'
 import { Drawer, Button, IconButton, Typography, Divider, MenuItem } from '@mui/material'
 
 import CustomTextField from '@/@core/components/mui/TextField'
+import CustomAutocomplete from '@/@core/components/mui/Autocomplete'
 
 // Types
-import type { FormAddUserDataType } from '@/types/employees/type'
+import type { UserDataType } from '@/types/users/type'
 
 type Props = {
   open: boolean
@@ -25,7 +26,7 @@ const initialData = {
 
 const AddUserDrawer = ({ open, handleClose }: Props) => {
   // State
-  const [formData, setFormData] = useState<FormAddUserDataType>(initialData)
+  const [formData, setFormData] = useState<UserDataType>(initialData)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -51,13 +52,22 @@ const AddUserDrawer = ({ open, handleClose }: Props) => {
         <Divider />
         <div>
           <form onSubmit={handleSubmit} className='flex flex-col gap-6 p-6'>
-            <CustomTextField
-              label='Full Name'
+            <CustomAutocomplete
+             fullWidth
+            //  options={top100Films}
+             id='autocomplete-custom'
+             title='dwadwa'
+             getOptionLabel={option => option.title || ''}
+             renderInput={params => <CustomTextField placeholder='พิมพ์ชื่อเพื่อค้นหา' {...params} label='ชื่อ-สกุล' />}
+            />
+            {/* <CustomTextField
+              label='ชื่อ-สกุล'
               fullWidth
-              placeholder='John Doe'
+              type='search'
+              placeholder='พิมพ์ชื่อเพื่อค้นหา'
               value={formData.fullname}
               onChange={e => setFormData({ ...formData, fullname: e.target.value })}
-            />
+            /> */}
 
             <CustomTextField
               select
@@ -74,36 +84,27 @@ const AddUserDrawer = ({ open, handleClose }: Props) => {
               <MenuItem value='Germany'>Germany</MenuItem>
             </CustomTextField>
             <CustomTextField
-              label='Contact'
+              label='เบอร์โทรศัพท์'
               type='number'
               fullWidth
-              placeholder='(397) 294-5153'
+              placeholder='กรอกเฉพาะตัวเลขเท่านั้น'
               value={formData.phone_number}
               onChange={e => setFormData({ ...formData, phone_number: e.target.value })}
             />
             <CustomTextField
-              select
+              label='ค่าเวร'
               fullWidth
-              id='select-role'
+              type='number'
               value={formData.cost_work}
               onChange={e => setFormData({ ...formData, cost_work: Number(e.target.value) })}
-              label='Select Role'
-            >
-              <MenuItem value='350'>350</MenuItem>
-              <MenuItem value='850'>850</MenuItem>
-            </CustomTextField>
+            />
             <CustomTextField
-              select
+              label='ค่า OT'
               fullWidth
-              id='select-plan'
+              type='number'
               value={formData.cost_ot}
               onChange={e => setFormData({ ...formData, cost_ot: Number(e.target.value) })}
-              label='Select Plan'
-              inputProps={{ placeholder: 'Select Plan' }}
-            >
-              <MenuItem value='350'>350</MenuItem>
-              <MenuItem value='850'>850</MenuItem>
-            </CustomTextField>
+            />
             <div className='flex items-center gap-4'>
               <Button variant='contained' type='submit'>
                 เพิ่มผู้ปฏิบัติงาน
