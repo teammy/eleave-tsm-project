@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 
-import { Drawer, Button, IconButton, Typography, Divider, MenuItem } from '@mui/material'
+import { Drawer, Button, IconButton, Typography, Divider, MenuItem, List } from '@mui/material'
 
 import CustomTextField from '@/@core/components/mui/TextField'
 import CustomAutocomplete from '@/@core/components/mui/Autocomplete'
@@ -15,6 +15,11 @@ type Props = {
   handleClose: () => void
 }
 
+type SelectFullNameType = {
+  cid: string
+  fullName: string
+}
+
 const initialData = {
   fullname: '',
   ward_id: '',
@@ -22,6 +27,23 @@ const initialData = {
   phone_number: '',
   cost_work: 0,
   cost_ot: 0
+}
+
+const furnishingArray: SelectFullNameType[] = [
+  { cid: '1', fullName: 'John Doe' },
+  { cid: '2', fullName: 'Jane Doe' },
+  { cid: '3', fullName: 'John Smith' },
+  { cid: '4', fullName: 'Jane Smith' }
+]
+
+const OptionFullName = async () => {
+  const res = await fetch(`${process.env.API_URL}/users/select_from_personal`)
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch User List data')
+  }
+
+  return res.json()
 }
 
 const AddUserDrawer = ({ open, handleClose }: Props) => {
@@ -53,12 +75,11 @@ const AddUserDrawer = ({ open, handleClose }: Props) => {
         <div>
           <form onSubmit={handleSubmit} className='flex flex-col gap-6 p-6'>
             <CustomAutocomplete
-             fullWidth
-            //  options={top100Films}
-             id='autocomplete-custom'
-             title='dwadwa'
-             getOptionLabel={option => option.title || ''}
-             renderInput={params => <CustomTextField placeholder='พิมพ์ชื่อเพื่อค้นหา' {...params} label='ชื่อ-สกุล' />}
+              fullWidth
+              options={furnishingArray}
+              id='add-member-fullname'
+              getOptionLabel={option => option.fullName || ''}
+              renderInput={params => <CustomTextField placeholder='พิมพ์เพื่อค้นหา' {...params} label='ชื่อ-สกุล' />}
             />
             {/* <CustomTextField
               label='ชื่อ-สกุล'
