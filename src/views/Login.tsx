@@ -1,7 +1,7 @@
 'use client'
 
 // React Imports
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Next Imports
 import Link from 'next/link'
@@ -16,7 +16,6 @@ import InputAdornment from '@mui/material/InputAdornment'
 import Checkbox from '@mui/material/Checkbox'
 import Button from '@mui/material/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import Divider from '@mui/material/Divider'
 import Alert from '@mui/material/Alert'
 
 // Third-party Imports
@@ -38,9 +37,6 @@ import type { SystemMode } from '@core/types'
 // Component Imports
 import Logo from '@components/layout/shared/Logo'
 import CustomTextField from '@core/components/mui/TextField'
-
-// Config Imports
-import themeConfig from '@configs/themeConfig'
 
 // Hook Imports
 import { useImageVariant } from '@core/hooks/useImageVariant'
@@ -112,7 +108,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
     resolver: zodResolver(validators.login),
     mode: 'onChange',
     defaultValues: {
-      email: 'admin@vuexy.com',
+      username: 'admin@vuexy.com',
       password: 'admin'
     }
   })
@@ -127,10 +123,9 @@ const Login = ({ mode }: { mode: SystemMode }) => {
 
   const handleClickShowPassword = () => setIsPasswordShown(show => !show)
 
-  const onSubmit: SubmitHandler<FormData> = async (data: FormData) => {
+  const onSubmit: SubmitHandler<types.Login> = async (data: types.Login) => {
     const res = await signIn('credentials', {
-      email: data.email,
-      password: data.password,
+     ...data,
       redirect: false
     })
 
@@ -146,6 +141,10 @@ const Login = ({ mode }: { mode: SystemMode }) => {
       }
     }
   }
+
+  useEffect(() => {
+    console.log('Login Page', errorState)
+  }, [errorState])
 
   return (
     <div className='flex bs-full justify-center'>
@@ -166,18 +165,17 @@ const Login = ({ mode }: { mode: SystemMode }) => {
         </div>
         <div className='flex flex-col gap-6 is-full sm:is-auto md:is-full sm:max-is-[400px] md:max-is-[unset] mbs-8 sm:mbs-11 md:mbs-0'>
           <div className='flex flex-col gap-1'>
-            <Typography variant='h4'>{`Welcome to ${themeConfig.templateName}! 👋🏻`}</Typography>
-            <Typography>Please sign-in to your account and start the adventure</Typography>
+            <Typography variant='h4'>{`สวัสดีผู้ใช้งานระบบ! 👋🏻`}</Typography>
+            <Typography>กรุณาเข้าสู่ระบบเพื่อใช้งานได้อย่างเต็มประสิทธิภาพ</Typography>
           </div>
-          <Alert icon={false} className='bg-[var(--mui-palette-primary-lightOpacity)]'>
-            <Typography variant='body2' color='primary'>
-              Email: <span className='font-medium'>admin@vuexy.com</span> / Pass:{' '}
-              <span className='font-medium'>admin</span>
-            </Typography>
+          {(errors.username || errorState !== null) && (
+          <Alert severity='error' variant='filled'>
+            {errors?.username?.message|| errorState?.message[0]}
           </Alert>
+          )}
           <form noValidate autoComplete='off' onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-6'>
             <Controller
-              name='email'
+              name='username'
               control={control}
               rules={{ required: true }}
               render={({ field }) => (
@@ -185,16 +183,16 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                   {...field}
                   autoFocus
                   fullWidth
-                  type='email'
-                  label='Email'
+                  type='text'
+                  label='ชื่อผู้ใช้งาน'
                   placeholder='Enter your email'
                   onChange={e => {
                     field.onChange(e.target.value)
                     errorState !== null && setErrorState(null)
                   }}
-                  {...((errors.email || errorState !== null) && {
+                  {...((errors.username || errorState !== null) && {
                     error: true,
-                    helperText: errors?.email?.message || errorState?.message[0]
+                    helperText: errors?.username?.message || errorState?.message[0]
                   })}
                 />
               )}
@@ -207,7 +205,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                 <CustomTextField
                   {...field}
                   fullWidth
-                  label='Password'
+                  label='รหัสผ่าน'
                   placeholder='············'
                   id='login-password'
                   type={isPasswordShown ? 'text' : 'password'}
@@ -235,24 +233,9 @@ const Login = ({ mode }: { mode: SystemMode }) => {
               </Typography>
             </div>
             <Button fullWidth variant='contained' type='submit'>
-              Login
+              เข้าสู่ระบบ
             </Button>
-            <div className='flex justify-center items-center flex-wrap gap-2'>
-              <Typography>New on our platform?</Typography>
-              <Typography component={Link} href={'/register'}>
-                Create an account
-              </Typography>
-            </div>
-            <Divider className='gap-2'>or</Divider>
-            <Button
-              color='secondary'
-              className='self-center text-textPrimary'
-              startIcon={<img src='/images/logos/google.png' alt='Google' width={22} />}
-              sx={{ '& .MuiButton-startIcon': { marginInlineEnd: 3 } }}
-              onClick={() => signIn('google')}
-            >
-              Sign in with Google
-            </Button>
+            
           </form>
         </div>
       </div>

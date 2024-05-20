@@ -27,7 +27,7 @@ export const authOptions: NextAuthOptions = {
          * For e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
          * You can also use the `req` object to obtain additional parameters (i.e., the request IP address)
          */
-        const { email, password } = credentials as { email: string; password: string }
+        const { username, password } = credentials as { username: string; password: string }
 
         try {
           // ** Login API Call to match the user credentials and receive user data in response along with his role
@@ -36,7 +36,7 @@ export const authOptions: NextAuthOptions = {
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, password })
+            body: JSON.stringify({ username, password })
           })
 
           const data = await res.json()
@@ -84,7 +84,6 @@ export const authOptions: NextAuthOptions = {
     strategy: 'jwt',
 
     // ** Seconds - How long until an idle session expires and is no longer valid
-    maxAge: 30 * 24 * 60 * 60 // ** 30 days
   },
 
   // ** Please refer to https://next-auth.js.org/configuration/options#pages for more `pages` options
