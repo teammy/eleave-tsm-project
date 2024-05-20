@@ -5,6 +5,7 @@ import type { ChildrenType, Direction } from '@core/types'
 import { VerticalNavProvider } from '@menu/contexts/verticalNavContext'
 import { SettingsProvider } from '@core/contexts/settingsContext'
 import ThemeProvider from '@components/theme'
+import { NextAuthProvider } from '@/features/auth/guards/nextAuthProvider'
 
 // Util Imports
 import { getDemoName, getMode, getSettingsFromCookie, getSystemMode } from '@core/utils/serverHelpers'
@@ -24,6 +25,7 @@ const Providers = (props: Props) => {
   const systemMode = getSystemMode()
 
   return (
+    <NextAuthProvider>
     <VerticalNavProvider>
       <SettingsProvider settingsCookie={settingsCookie} mode={mode} demoName={demoName}>
         <ThemeProvider direction={direction} systemMode={systemMode}>
@@ -31,6 +33,7 @@ const Providers = (props: Props) => {
         </ThemeProvider>
       </SettingsProvider>
     </VerticalNavProvider>
+    </NextAuthProvider>
   )
 }
 
