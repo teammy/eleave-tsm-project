@@ -22,6 +22,8 @@ import MenuItem from '@mui/material/MenuItem'
 import Button from '@mui/material/Button'
 
 // Hook Imports
+import { useSession,signOut } from 'next-auth/react'
+
 import { useSettings } from '@core/hooks/useSettings'
 
 // Styled component for badge content
@@ -37,6 +39,7 @@ const BadgeContentSpan = styled('span')({
 const UserDropdown = () => {
   // States
   const [open, setOpen] = useState(false)
+  const { data: session } = useSession()
 
   // Refs
   const anchorRef = useRef<HTMLDivElement>(null)
@@ -106,9 +109,9 @@ const UserDropdown = () => {
                     <Avatar alt='John Doe' src='/images/avatars/1.png' />
                     <div className='flex items-start flex-col'>
                       <Typography className='font-medium' color='text.primary'>
-                        John Doe
+                        {session?.user?.person_firstname} {session?.user?.person_lastname}
                       </Typography>
-                      <Typography variant='caption'>admin@vuexy.com</Typography>
+                      <Typography variant='caption'>{session?.user?.position_name}</Typography>
                     </div>
                   </div>
                   <Divider className='mlb-1' />
@@ -135,10 +138,10 @@ const UserDropdown = () => {
                       color='error'
                       size='small'
                       endIcon={<i className='tabler-logout' />}
-                      onClick={handleUserLogout}
+                      onClick={()=> signOut({ redirect: true, callbackUrl: '/login'})}
                       sx={{ '& .MuiButton-endIcon': { marginInlineStart: 1.5 } }}
                     >
-                      Logout
+                      ออกจากระบบ
                     </Button>
                   </div>
                 </MenuList>

@@ -1,3 +1,4 @@
+
 // Third-party Imports
 import CredentialProvider from 'next-auth/providers/credentials'
 import { type NextAuthOptions,type DefaultSession } from 'next-auth'
@@ -8,6 +9,13 @@ declare module 'next-auth' {
       person_id : string;
       person_firstname : string;
       person_lastname : string;
+      person_tel: string;
+      position_id: string;
+      position_name: string;
+      ward_id: string;
+      ward_name: string;
+      duty_id: string;
+      duty_name: string;
     } & DefaultSession['user'];
   }
 
@@ -16,6 +24,13 @@ declare module 'next-auth' {
     person_id: string;
     person_firstname : string;
     person_lastname : string;
+    person_tel: string;
+    position_id: string;
+    position_name: string;
+    ward_id: string;
+    ward_name: string;
+    duty_id: string;
+    duty_name: string;
   }
 }
 
@@ -24,6 +39,13 @@ declare module 'next-auth/jwt' {
     person_id: string;
     person_firstname : string;
     person_lastname : string;
+    person_tel: string;
+    position_id: string;
+    position_name: string;
+    ward_id: string;
+    ward_name: string;
+    duty_id: string;
+    duty_name: string;
   }
 }
 
@@ -127,6 +149,13 @@ export const authOptions: NextAuthOptions = {
         token.person_id = user.person_id
         token.person_firstname = user.person_firstname
         token.person_lastname = user.person_lastname
+        token.person_tel = user.person_tel
+        token.position_id = user.position_id
+        token.position_name = user.position_name
+        token.ward_id = user.ward_id
+        token.ward_name = user.ward_name
+        token.duty_id = user.duty_id
+        token.duty_name = user.duty_name
       }
 
       return token
@@ -138,6 +167,13 @@ export const authOptions: NextAuthOptions = {
         session.user.person_firstname = token.person_firstname
         session.user.person_lastname = token.person_lastname
         session.user.person_id = token.person_id
+        session.user.person_tel = token.person_tel
+        session.user.position_id = token.position_id
+        session.user.position_name = token.position_name
+        session.user.ward_id = token.ward_id
+        session.user.ward_name = token.ward_name
+        session.user.duty_id = token.duty_id
+        session.user.duty_name = token.duty_name
       }
 
       return session
