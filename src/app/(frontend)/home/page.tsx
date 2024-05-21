@@ -1,3 +1,11 @@
+'use client'
+
+import { useSession } from 'next-auth/react'
+
 export default function Page() {
-  return <h1>Home page!</h1>
+  const { data: session, status } = useSession()
+
+  console.log(  session, status)
+
+  return <h1>Home page! {session?.user.person_id}</h1>
 }

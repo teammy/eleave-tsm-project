@@ -20,11 +20,8 @@ import Alert from '@mui/material/Alert'
 
 // Third-party Imports
 import { signIn } from 'next-auth/react'
-import { Controller, useForm } from 'react-hook-form'
 
-import { object, minLength, string, email } from 'valibot'
-import type { SubmitHandler } from 'react-hook-form'
-import type { Input } from 'valibot'
+import {Controller, useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import classnames from 'classnames'
 
@@ -70,15 +67,6 @@ type ErrorType = {
   message: string[]
 }
 
-type FormData = Input<typeof schema>
-
-const schema = object({
-  email: string([minLength(1, 'This field is required'), email('Email is invalid')]),
-  password: string([
-    minLength(1, 'This field is required'),
-    minLength(5, 'Password must be at least 5 characters long')
-  ])
-})
 
 const Login = ({ mode }: { mode: SystemMode }) => {
   // States
@@ -108,8 +96,8 @@ const Login = ({ mode }: { mode: SystemMode }) => {
     resolver: zodResolver(validators.login),
     mode: 'onChange',
     defaultValues: {
-      username: 'admin@vuexy.com',
-      password: 'admin'
+      username: '',
+      password: ''
     }
   })
 
@@ -141,10 +129,6 @@ const Login = ({ mode }: { mode: SystemMode }) => {
       }
     }
   }
-
-  useEffect(() => {
-    console.log('Login Page', errorState)
-  }, [errorState])
 
   return (
     <div className='flex bs-full justify-center'>
@@ -185,7 +169,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                   fullWidth
                   type='text'
                   label='ชื่อผู้ใช้งาน'
-                  placeholder='Enter your email'
+                  placeholder='Enter your Username'
                   onChange={e => {
                     field.onChange(e.target.value)
                     errorState !== null && setErrorState(null)
@@ -206,7 +190,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
                   {...field}
                   fullWidth
                   label='รหัสผ่าน'
-                  placeholder='············'
+                  placeholder=''
                   id='login-password'
                   type={isPasswordShown ? 'text' : 'password'}
                   onChange={e => {
@@ -235,7 +219,7 @@ const Login = ({ mode }: { mode: SystemMode }) => {
             <Button fullWidth variant='contained' type='submit'>
               เข้าสู่ระบบ
             </Button>
-            
+
           </form>
         </div>
       </div>

@@ -11,7 +11,7 @@ import type { NextRequestWithAuth } from 'next-auth/middleware'
 import { ensurePrefix, withoutSuffix } from '@/utils/string'
 
 // Constants
-const HOME_PAGE_URL = '/dashboards/crm'
+const HOME_PAGE_URL = '/home'
 
 const _redirect = (url: string, request: NextRequestWithAuth) => {
   const _url = ensurePrefix(url, `${process.env.BASEPATH}`)
